@@ -1,3 +1,4 @@
 pandas
 dask[distributed]
 py2neo
+python-dotenv
