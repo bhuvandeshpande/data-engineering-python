@@ -6,4 +6,8 @@ class CSVReader:
         self.chunksize = chunksize
 
     def read_csv_in_chunks(self):
-        return dd.read_csv(self.file_path, blocksize=self.chunksize)
+        try:
+            return dd.read_csv(self.file_path, blocksize=self.chunksize)
+        except Exception as e:
+            print(f"Error reading CSV file: {e}")
+            raise

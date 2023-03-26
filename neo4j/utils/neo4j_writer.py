@@ -8,19 +8,23 @@ class Neo4jWriter:
         nodes = []
         relationships = []
 
-        for index, row in chunk.iterrows():
-            source_node = Node("Source", id=row['source'])
-            target_node = Node("Target", id=row['target'])
-            relationship = Relationship(source_node, row['relationship_type'], target_node)
+        try:
+            for index, row in chunk.iterrows():
+                source_node = Node("Source", id=row['source'])
+                target_node = Node("Target", id=row['target'])
+                relationship = Relationship(source_node, row['relationship_type'], target_node)
 
-            nodes.extend([source_node, target_node])
-            relationships.append(relationship)
+                nodes.extend([source_node, target_node])
+                relationships.append(relationship)
 
-        with self.graph.begin() as tx:
-            for node in nodes:
-                tx.merge(node)
+            with self.graph.begin() as tx:
+                for node in nodes:
+                    tx.merge(node)
 
-            for relationship in relationships:
-                tx.merge(relationship)
+                for relationship in relationships:
+                    tx.merge(relationship)
 
-        return len(chunk)
+            return len(chunk)
+        except Exception as e:
+            print(f"Error processing chunk: {e}")
+            raise
