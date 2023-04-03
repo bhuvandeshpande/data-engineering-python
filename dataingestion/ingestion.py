@@ -26,12 +26,8 @@ def ingestion(ds_names=None):
                 df_reader = cv.read_csv_file()            
                 for idx, df in enumerate(df_reader):
                     print(f'Processing chunk {idx} with size {df.shape[0]} of {ds} table')
-                    dbwriter = DBWriter(df, db_conn, ds)
+                    dbwriter = DBWriter(df, db_conn, ds, idx)
                     dbwriter.write_to_postgres()
-                    print(f'Data chunk {idx} with size {df.shape[0]} loaded successfully to table retail.{ds}')
-                print(f'Check data loaded to table retail.{ds}......')
-                query = f'SELECT * FROM retail.{ds} LIMIT 10'
-                print(query)
         except NameError as ne:
             print(ne)
             pass
@@ -39,7 +35,7 @@ def ingestion(ds_names=None):
             print(e)
             pass
         finally:
-            print(f'All data chunks loaded successfully to table retail.{ds}')
+            print(f'All data chunks loaded successfully to table retail.{ds}\n')
 
 
     # Instantiate postgres writer object to write data to postgres database
