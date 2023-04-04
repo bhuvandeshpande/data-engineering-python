@@ -13,3 +13,11 @@ PG_DB = os.environ["PG_DB"]
 PG_PORT = os.environ["PG_PORT"]
 PG_USER = os.environ["PG_USER"]
 PG_PASS = os.environ["PG_PASS"]
+
+
+# Read the configuration values from the environment variables
+NEO4J_URI = os.environ["NEO4J_URI"]
+NEO4J_USER = os.environ["NEO4J_USER"]
+NEO4J_PASSWORD = os.environ["NEO4J_PASSWORD"]
+#CSV_FILE_PATH = os.environ["CSV_FILE_PATH"]
+#CHUNK_SIZE = int(os.environ["CHUNK_SIZE"])
