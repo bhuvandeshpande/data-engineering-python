@@ -41,4 +41,4 @@ def ingestion(ds_names=None, dest='psql'):
             print(f'All data chunks loaded successfully to {dest} for {ds}\n')
 
 if __name__ == '__main__':
-    ingestion(dest='neo4j')
+    ingestion('orders', dest='neo4j')
