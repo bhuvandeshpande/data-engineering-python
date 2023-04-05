@@ -18,7 +18,7 @@ def ingestion(ds_names=None):
     for ds in ds_names:
         files = glob.glob(f'{config.DATA_SRC_DIR}/{ds}/part-*')
         if len(files) == 0:
-            raise NameError('No source files found for {ds} dataset')
+            raise NameError(f'No source files found for {ds} dataset')
 
         try:
             mp = MultiProcessor()
