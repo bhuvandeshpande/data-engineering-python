@@ -18,8 +18,5 @@ class CsvReader():
         ds_name = file_path_list[-2]
         file_name = file_path_list[-1]
         columns = self.get_column_names(self.schemas, self.ds_name)
-        df_reader = pd.read_csv(self.file, names=columns, chunksize=10000)
-        
-        # Concatenate the chunks into a single DataFrame
-        combined_df = pd.concat(df_reader)
-        return combined_df
+        df = pd.read_csv(self.file, names=columns)
+        return df
