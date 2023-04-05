@@ -1,0 +1,3 @@
+pandas
+python-dotenv
+neo4j

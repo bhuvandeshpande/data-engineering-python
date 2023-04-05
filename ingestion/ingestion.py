@@ -1,16 +1,12 @@
 import config
 import glob
 import json
-from utils.multiprocessor_new import MultiProcessor
+from utils.multiprocessor import MultiProcessor
 
-def ingestion(ds_names=None, dest='psql'):
+def ingestion(ds_names=None):
 
     schemas = json.load(open(config.SCHEMAS_PATH))
-
-    if dest == 'psql':
-        db_conn = f'postgresql://{config.PG_USER}:{config.PG_PASS}@{config.PG_HOST}:{config.PG_PORT}/{config.PG_DB}'
-    else:
-        db_conn = {
+    db_conn = {
             'uri': config.NEO4J_URI,
             'user': config.NEO4J_USER,
             'password': config.NEO4J_PASSWORD
@@ -27,10 +23,7 @@ def ingestion(ds_names=None, dest='psql'):
         try:
             mp = MultiProcessor()
             for file in files:
-                if dest == 'psql':
-                    mp.process_file(file, schemas, ds, db_conn)
-                else:
-                    mp.process_file_neo4j(file, schemas, ds, db_conn)
+                mp.process_file_neo4j(file, schemas, ds, db_conn)
         except NameError as ne:
             print(ne)
             pass
@@ -38,7 +31,7 @@ def ingestion(ds_names=None, dest='psql'):
             print(e)
             pass
         finally:
-            print(f'All data chunks loaded successfully to {dest} for {ds}\n')
+            print(f'All data chunks loaded successfully to neo4j for {ds}\n')
 
 if __name__ == '__main__':
-    ingestion(['orders'], dest='neo4j')
+    ingestion(['orders'])
