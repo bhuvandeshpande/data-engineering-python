@@ -14,7 +14,7 @@ class Neo4JWriter():
             tx.run(query, properties_list=properties_list)
 
         # Prepare the properties list
-        properties_list = [row.to_dict() for _, row in df.iterrows()]
+        properties_list = [row.to_dict() for _, row in df.reset_index(drop=True).iterrows()]
 
         # Define the query to insert data into the Neo4j database
         # Modify the query according to your database schema and data requirements
